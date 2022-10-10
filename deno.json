@@ -1,0 +1,10 @@
+{
+  "tasks": {
+    "start:yoga": "deno run -A --watch=static/,routes/,graphql/ examples/graphql-yoga/dev.ts"
+  },
+  "importMap": "./import_map.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact"
+  }
+}
