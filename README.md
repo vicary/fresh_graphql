@@ -5,7 +5,7 @@ GraphQL development for Deno Fresh.
 ## Live Demo
 
 1. [`graphql-yoga`](https://fresh-graphql-yoga.deno.dev/graphql)
-1. `apollo-server` (soon<sup>TM</sup>)
+1. `apollo-server` (soon™)
 
 ## Why `fresh_graphql`?
 
