@@ -2,6 +2,11 @@
 
 GraphQL development for Deno Fresh.
 
+## Live Demo
+
+1. [`graphql-yoga`](https://fresh-graphql-yoga.deno.dev/graphql)
+1. `apollo-server` (soon<sup>TM</sup>)
+
 ## Why `fresh_graphql`?
 
 1. Familiar developer experience with `fresh` projects.
@@ -10,7 +15,9 @@ GraphQL development for Deno Fresh.
 
 ## Installation
 
-`fresh_graphql` hooks into the `dev.ts` lifecycle of fresh, [create a fresh project](https://fresh.deno.dev/docs/getting-started/create-a-project) if you haven't done so.
+`fresh_graphql` hooks into the `dev.ts` lifecycle of fresh,
+[create a fresh project](https://fresh.deno.dev/docs/getting-started/create-a-project)
+if you haven't done so.
 
 You need to patch 3 files from an existing fresh project:
 
@@ -65,7 +72,8 @@ await dev(import.meta.url, "./main.ts");
 
 ### Entrypoint
 
-Any data handler routes would work, the example below uses `/graphql` as a convension.
+Any data handler routes would work, the example below uses `/graphql` as a
+convension.
 
 ```ts
 // routes/graphql.ts
@@ -88,12 +96,15 @@ export const handler = async (req: Request, ctx: HandlerContext) => {
 };
 ```
 
-1. `@graphql-yoga/common` is chosen for it's simplicity, you may use any GraphQL serveres compatible with `@graphql-tools/schema`.
-1. `fresh_graphql.gen.ts` This is the manifest file generated whenever you make changes to source codes in the `./graphql` directory.
+1. `@graphql-yoga/common` is chosen for it's simplicity, you may use any GraphQL
+   serveres compatible with `@graphql-tools/schema`.
+1. `fresh_graphql.gen.ts` This is the manifest file generated whenever you make
+   changes to source codes in the `./graphql` directory.
 
 ### Queries and Mutations
 
-The example below follows the naming convension and use `mod.ts`, but you may name your TypeScript and/or JavaScript files anyway you like.
+The example below follows the naming convension and use `mod.ts`, but you may
+name your TypeScript and/or JavaScript files anyway you like.
 
 ```ts
 // ./graphql/Query/test/mod.ts
@@ -107,9 +118,12 @@ export const schema = `
 export const resolver = () => "Hello World!";
 ```
 
-Schema level types, `Query`, `Mutation` and `Subscription`, will be automatically created when such a corresponding extension statement is found.
+Schema level types, `Query`, `Mutation` and `Subscription`, will be
+automatically created when such a corresponding extension statement is found.
 
-Resolver object will be wrapped according to the directory structure, i.e. `{ Query: { foo: resolver } }`. To override this behavior, export an object instead.
+Resolver object will be wrapped according to the directory structure, i.e.
+`{ Query: { foo: resolver } }`. To override this behavior, export an object
+instead.
 
 ```ts
 export const resolver = {
@@ -137,3 +151,8 @@ export const resolver = async function* (_, { from }) {
   }
 };
 ```
+
+## Sponsorship
+
+If you think I did a good job or want to see a feature happening,
+[a coffee would do](https://buymeacoffee.com/vicary).
