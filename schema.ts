@@ -1,3 +1,5 @@
+// deno-lint-ignore-file no-explicit-any
+
 import type {
   IExecutableSchemaDefinition,
 } from "https://cdn.skypack.dev/@graphql-tools/schema?dts";
@@ -10,7 +12,6 @@ import type {
 } from "https://cdn.skypack.dev/@graphql-tools/utils?dts";
 import { sep } from "https://deno.land/std@0.155.0/path/mod.ts";
 
-// deno-lint-ignore no-explicit-any
 export type Callable = (...args: any[]) => any;
 
 export type GraphQLModule<
