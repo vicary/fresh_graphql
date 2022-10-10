@@ -13,18 +13,31 @@ import { sep } from "https://deno.land/std@0.155.0/path/mod.ts";
 // deno-lint-ignore no-explicit-any
 export type Callable = (...args: any[]) => any;
 
-export type GraphQLModule = {
+export type GraphQLModule<
+  TSource,
+  TContext,
+  TArgs = Record<string, any>,
+  TReturn = any,
+> = {
   schema?: string;
-  resolver?: IResolvers | IFieldResolver<any, any>;
+  resolver?: IResolvers | IFieldResolver<TSource, TContext, TArgs, TReturn>;
 };
 
-export type Manifest = {
-  modules: Record<string, GraphQLModule>;
+export type Manifest<
+  TSource,
+  TContext,
+  TArgs = Record<string, any>,
+  TReturn = any,
+> = {
+  modules: Record<string, GraphQLModule<TSource, TContext, TArgs, TReturn>>;
   baseUrl: string;
 };
 
-export const fromManifest = <TContext = unknown>(
-  manifest: Manifest,
+export const fromManifest = <
+  TManifest extends Manifest<any, any, any, any>,
+  TContext = unknown,
+>(
+  manifest: TManifest,
   options?: Omit<
     IExecutableSchemaDefinition<TContext>,
     "typeDefs" | "resolvers"
