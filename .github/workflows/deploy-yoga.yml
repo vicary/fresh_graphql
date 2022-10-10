@@ -17,4 +17,4 @@ jobs:
         uses: denoland/deployctl@v1
         with:
           project: "fresh-graphql-yoga"
-          entrypoint: "./exapmles/graphql-yoga/main.ts"
+          entrypoint: "./examples/graphql-yoga/main.ts"
