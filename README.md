@@ -104,7 +104,7 @@ export const handler = async (req: Request, ctx: HandlerContext) => {
 ```ts
 // ./graphql/Query/joke.ts
 
-export const schema = `
+export const schema = /* GraphQL */ `
   extend type Query {
     joke: String!
   }
@@ -124,22 +124,20 @@ const JOKES = [
   "An SEO expert walked into a bar, pub, inn, tavern, hostelry, public house.",
 ];
 
-export const resolver = () => {
-  return JOKES[Math.floor(Math.random() * JOKES.length)];
-};
+export const resolver = () => JOKES[Math.floor(Math.random() * JOKES.length)];
 ```
 
 Schema level types, `Query`, `Mutation` and `Subscription`, will be
 automatically created when such a corresponding extension statement is found.
 
 Resolver object will be wrapped according to the directory structure, i.e.
-`{ Query: { foo: resolver } }`. To override this behavior, export an object
+`{ Query: { joke: resolver } }`. To override this behavior, export an object
 instead.
 
 ```ts
 export const resolver = {
   Query: {
-    bar: () => "Hello world!";
+    foo: () => "bar";
   }
 };
 ```
@@ -147,9 +145,9 @@ export const resolver = {
 ### Subscriptions
 
 ```ts
-// graphql/Subscription/countdown.ts
+// ./graphql/Subscription/countdown.ts
 
-export const schema = `
+export const schema = /* GraphQL */ `
   extend type Subscription {
     countdown(from: Int = 0): Int!
   }
