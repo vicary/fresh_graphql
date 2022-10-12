@@ -72,7 +72,7 @@ const manifest = {
     ${
     modules.map((file, i) => {
       const { dir, name } = parse(file);
-      return `"${dir.slice(1)}/${name}": $${i}`;
+      return `"${join(dir.slice(1), name)}": $${i}`;
     }).join(",\n    ")
   }
   },
