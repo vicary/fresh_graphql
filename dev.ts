@@ -1,6 +1,10 @@
 // dev.ts: A simple modification of $fresh/dev.ts for GraphQL.
 import { ensureDir, walk } from "https://deno.land/std@0.155.0/fs/mod.ts";
-import { dirname, join } from "https://deno.land/std@0.155.0/path/mod.ts";
+import {
+  dirname,
+  join,
+  parse,
+} from "https://deno.land/std@0.155.0/path/mod.ts";
 import {
   fromFileUrl,
   toFileUrl,
@@ -65,7 +69,12 @@ ${
 
 const manifest = {
   modules: {
-    ${modules.map((file, i) => `"${file.slice(1)}": $${i}`).join(",\n    ")}
+    ${
+    modules.map((file, i) => {
+      const { dir, name } = parse(file);
+      return `"${dir.slice(1)}/${name}": $${i}`;
+    }).join(",\n    ")
+  }
   },
   baseUrl: import.meta.url,
 };

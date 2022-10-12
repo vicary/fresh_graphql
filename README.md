@@ -83,12 +83,10 @@ import { createServer } from "@graphql-yoga/common";
 import { fromManifest } from "$fresh_graphql/schema.ts";
 import manifest from "../fresh_graphql.gen.ts";
 
-const schema = fromManifest(manifest);
-
 const yoga = createServer<HandlerContext>({
   logging: true,
   maskedErrors: false,
-  schema,
+  schema: fromManifest(manifest),
 });
 
 export const handler = async (req: Request, ctx: HandlerContext) => {
@@ -103,19 +101,32 @@ export const handler = async (req: Request, ctx: HandlerContext) => {
 
 ### Queries and Mutations
 
-The example below follows the naming convension and use `mod.ts`, but you may
-name your TypeScript and/or JavaScript files anyway you like.
-
 ```ts
-// ./graphql/Query/test/mod.ts
+// ./graphql/Query/joke.ts
 
 export const schema = `
   extend type Query {
-    foo: String!
+    joke: String!
   }
 `;
 
-export const resolver = () => "Hello World!";
+// Jokes courtesy of https://punsandoneliners.com/randomness/programmer-jokes/
+const JOKES = [
+  "Why do Java developers often wear glasses? They can't C#.",
+  "A SQL query walks into a bar, goes up to two tables and says “can I join you?”",
+  "Wasn't hard to crack Forrest Gump's password. 1forrest1.",
+  "I love pressing the F5 key. It's refreshing.",
+  "Called IT support and a chap from Australia came to fix my network connection.  I asked “Do you come from a LAN down under?”",
+  "There are 10 types of people in the world. Those who understand binary and those who don't.",
+  "Why are assembly programmers often wet? They work below C level.",
+  "My favourite computer based band is the Black IPs.",
+  "What programme do you use to predict the music tastes of former US presidential candidates? An Al Gore Rhythm.",
+  "An SEO expert walked into a bar, pub, inn, tavern, hostelry, public house.",
+];
+
+export const resolver = () => {
+  return JOKES[Math.floor(Math.random() * JOKES.length)];
+};
 ```
 
 Schema level types, `Query`, `Mutation` and `Subscription`, will be
@@ -136,7 +147,7 @@ export const resolver = {
 ### Subscriptions
 
 ```ts
-// graphql/Subscription/countdown/mod.ts
+// graphql/Subscription/countdown.ts
 
 export const schema = `
   extend type Subscription {

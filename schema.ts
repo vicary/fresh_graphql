@@ -14,28 +14,18 @@ import { sep } from "https://deno.land/std@0.155.0/path/mod.ts";
 
 export type Callable = (...args: any[]) => any;
 
-export type GraphQLModule<
-  TSource,
-  TContext,
-  TArgs = Record<string, any>,
-  TReturn = any,
-> = {
+export type GraphQLModule = {
   schema?: string;
-  resolver?: IResolvers | IFieldResolver<TSource, TContext, TArgs, TReturn>;
+  resolver?: IResolvers | IFieldResolver<any, any, any, any>;
 };
 
-export type Manifest<
-  TSource,
-  TContext,
-  TArgs = Record<string, any>,
-  TReturn = any,
-> = {
-  modules: Record<string, GraphQLModule<TSource, TContext, TArgs, TReturn>>;
+export type Manifest = {
+  modules: Record<string, GraphQLModule>;
   baseUrl: string;
 };
 
 export const fromManifest = <
-  TManifest extends Manifest<any, any, any, any>,
+  TManifest extends Manifest,
   TContext = unknown,
 >(
   manifest: TManifest,
@@ -53,7 +43,7 @@ export const fromManifest = <
       if (!resolver) return;
 
       const resolverObj: IResolvers = {};
-      const pathSegments = name.split(sep).slice(0, -1);
+      const pathSegments = name.split(sep);
       const isSubscription = pathSegments[0] === "Subscription";
 
       let currentPath = resolverObj;
