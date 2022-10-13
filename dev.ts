@@ -72,7 +72,14 @@ const manifest = {
     ${
     modules.map((file, i) => {
       const { dir, name } = parse(file);
-      return `"${join(dir.slice(1), name)}": $${i}`;
+      const key = [
+        // Remove leading slash
+        dir.slice(1),
+        name,
+      ].map((v) => v.trim()).filter(Boolean)
+        .join(".");
+
+      return `"${key}": $${i}`;
     }).join(",\n    ")
   }
   },

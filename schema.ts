@@ -10,7 +10,6 @@ import type {
   IFieldResolver,
   IResolvers,
 } from "https://cdn.skypack.dev/@graphql-tools/utils?dts";
-import { sep } from "https://deno.land/std@0.155.0/path/mod.ts";
 
 export type Callable = (...args: any[]) => any;
 
@@ -43,7 +42,7 @@ export const fromManifest = <
       if (!resolver) return;
 
       const resolverObj: IResolvers = {};
-      const pathSegments = name.split(sep);
+      const pathSegments = name.split(".");
       const isSubscription = pathSegments[0] === "Subscription";
 
       let currentPath = resolverObj;
