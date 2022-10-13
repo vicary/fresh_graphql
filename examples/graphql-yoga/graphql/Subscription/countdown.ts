@@ -2,7 +2,7 @@ import type { IFieldResolver } from "@graphql-tools/utils";
 
 export const schema = /* GraphQL */ `
   extend type Subscription {
-    countdown(from: Int!): Int!
+    countdown(from: Int = 3): Int!
   }
 `;
 
