@@ -8,7 +8,8 @@
     "@preact/signals": "https://esm.sh/*@preact/signals@1.0.3",
     "@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.0.1",
 
-    "@graphql-yoga/common": "https://cdn.skypack.dev/@graphql-yoga/common?dts",
-    "@graphql-tools/utils": "https://cdn.skypack.dev/@graphql-tools/utils?dts"
+    "@graphql-tools/schema": "https://cdn.skypack.dev/@graphql-tools/schema?dts",
+    "@graphql-tools/utils": "https://cdn.skypack.dev/@graphql-tools/utils?dts",
+    "@graphql-yoga/common": "https://cdn.skypack.dev/@graphql-yoga/common?dts"
   }
 }

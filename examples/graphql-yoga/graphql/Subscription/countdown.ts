@@ -8,8 +8,13 @@ export const schema = /* GraphQL */ `
 
 export const resolver: IFieldResolver<unknown, unknown, { from: number }> =
   async function* (_, { from }) {
-    for (let i = from; i >= 0; i--) {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      yield { countdown: i };
+    try {
+      while (from > 0) {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        yield { countdown: from };
+        from--;
+      }
+    } finally {
+      console.info(`Countdown finished${from > 0 ? ` at ${from}` : ""}.`);
     }
   };

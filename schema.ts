@@ -1,21 +1,18 @@
 // deno-lint-ignore-file no-explicit-any
 
-import type {
-  IExecutableSchemaDefinition,
-} from "https://cdn.skypack.dev/@graphql-tools/schema?dts";
-import {
-  makeExecutableSchema,
-} from "https://cdn.skypack.dev/@graphql-tools/schema?dts";
-import type {
-  IFieldResolver,
-  IResolvers,
-} from "https://cdn.skypack.dev/@graphql-tools/utils?dts";
+import type { IExecutableSchemaDefinition } from "@graphql-tools/schema";
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import type { IFieldResolver, IResolvers } from "@graphql-tools/utils";
+import type { GraphQLScalarType } from "https://esm.sh/graphql@16.6.0";
 
 export type Callable = (...args: any[]) => any;
 
 export type GraphQLModule = {
   schema?: string;
-  resolver?: IResolvers | IFieldResolver<any, any, any, any>;
+  resolver?:
+    | GraphQLScalarType
+    | IResolvers
+    | IFieldResolver<any, any, any, any>;
 };
 
 export type Manifest = {
