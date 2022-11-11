@@ -1,15 +1,15 @@
 // dev.ts: A simple modification of $fresh/dev.ts for GraphQL.
-import { ensureDir, walk } from "https://deno.land/std@0.155.0/fs/mod.ts";
+
 import {
   dirname,
-  join,
-  parse,
-} from "https://deno.land/std@0.155.0/path/mod.ts";
-import {
+  ensureDir,
+  ensureMinDenoVersion,
   fromFileUrl,
+  join,
+  parsePath,
   toFileUrl,
-} from "https://deno.land/x/fresh@1.1.1/src/dev/deps.ts";
-import { ensureMinDenoVersion } from "https://deno.land/x/fresh@1.1.1/src/dev/mod.ts";
+  walk,
+} from "./deps.ts";
 
 export type DevOptions = {
   /** Path to generated schema manifest. */
@@ -71,8 +71,8 @@ const manifest = {
   modules: {
     ${
     modules.map((file, i) => {
-      const { dir, name } = parse(file);
-      const key = [
+      const { dir, name } = parsePath(file);
+      const key: string = [
         // Remove leading slash
         dir.slice(1),
         name,
