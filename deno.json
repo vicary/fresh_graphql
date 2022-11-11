@@ -1,5 +1,6 @@
 {
   "tasks": {
+    "deploy:yoga": "deployctl deploy --project=fresh-graphql-yoga examples/graphql-yoga/main.ts",
     "start:yoga": "deno run -A --watch=static/,routes/,graphql/ examples/graphql-yoga/dev.ts"
   },
   "importMap": "./import_map.json",
