@@ -1,7 +1,20 @@
 export { ensureMinDenoVersion } from "$fresh/src/dev/mod.ts";
-export { makeExecutableSchema } from "@graphql-tools/schema";
-export type { IExecutableSchemaDefinition } from "@graphql-tools/schema";
-export { getDirective, MapperKind, mapSchema } from "@graphql-tools/utils";
+export { ensureDir, walk } from "https://deno.land/std@0.159.0/fs/mod.ts";
+export {
+  dirname,
+  fromFileUrl,
+  join,
+  parse as parsePath,
+  toFileUrl,
+} from "https://deno.land/std@0.159.0/path/mod.ts";
+export { assert } from "https://deno.land/std@0.159.0/testing/asserts.ts";
+export { makeExecutableSchema } from "https://esm.sh/@graphql-tools/schema@9.0.9?external=graphql";
+export type { IExecutableSchemaDefinition } from "https://esm.sh/@graphql-tools/schema@9.0.9?external=graphql";
+export {
+  getDirective,
+  MapperKind,
+  mapSchema,
+} from "https://esm.sh/@graphql-tools/utils@9.1.0?external=graphql";
 export type {
   ArgumentMapper,
   EnumTypeMapper,
@@ -17,8 +30,11 @@ export type {
   ScalarTypeMapper,
   SchemaMapper,
   UnionTypeMapper,
-} from "@graphql-tools/utils";
-export { defaultFieldResolver, parse as parseGraphQL } from "graphql";
+} from "https://esm.sh/@graphql-tools/utils@9.1.0?external=graphql";
+export {
+  defaultFieldResolver,
+  parse as parseGraphQL,
+} from "https://esm.sh/graphql@16.6.0";
 export type {
   DirectiveDefinitionNode,
   GraphQLFieldConfig,
@@ -26,13 +42,4 @@ export type {
   GraphQLInputFieldConfig,
   GraphQLScalarType,
   GraphQLSchema,
-} from "graphql";
-export { ensureDir, walk } from "std/fs/mod.ts";
-export {
-  dirname,
-  fromFileUrl,
-  join,
-  parse as parsePath,
-  toFileUrl,
-} from "std/path/mod.ts";
-export { assert } from "std/testing/asserts.ts";
+} from "https://esm.sh/graphql@16.6.0";

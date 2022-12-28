@@ -7,10 +7,7 @@
     "preact-render-to-string": "https://esm.sh/*preact-render-to-string@5.2.4",
     "@preact/signals": "https://esm.sh/*@preact/signals@1.0.3",
     "@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.0.1",
-    "std/": "https://deno.land/std@0.159.0/",
 
-    "@graphql-tools/schema": "https://esm.sh/@graphql-tools/schema@9.0.9?external=graphql",
-    "@graphql-tools/utils": "https://esm.sh/@graphql-tools/utils@9.1.0?external=graphql",
     "@graphql-yoga/common": "https://esm.sh/@graphql-yoga/common@2.12.12?external=graphql",
     "graphql": "https://esm.sh/graphql@16.6.0"
   }
