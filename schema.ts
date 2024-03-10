@@ -1,27 +1,30 @@
 // schema.ts: Process schema into an executable form from generated manifests.
 // deno-lint-ignore-file no-explicit-any
 
-import type {
-  ArgumentMapper,
-  EnumTypeMapper,
-  EnumValueMapper,
-  FieldMapper,
-  GenericFieldMapper,
-  GraphQLFieldConfig,
-  GraphQLFieldResolver,
-  GraphQLInputFieldConfig,
-  GraphQLScalarType,
-  IExecutableSchemaDefinition,
-  InputFieldMapper,
-  InputObjectTypeMapper,
-  InterfaceTypeMapper,
-  IResolvers,
-  ObjectTypeMapper,
-  ScalarTypeMapper,
-  SchemaMapper as GraphQLSchemaMapper,
-  UnionTypeMapper,
+import {
+  type ArgumentMapper,
+  type EnumTypeMapper,
+  type EnumValueMapper,
+  type FieldMapper,
+  type GenericFieldMapper,
+  type GraphQLFieldConfig,
+  type GraphQLFieldResolver,
+  type GraphQLInputFieldConfig,
+  type GraphQLScalarType,
+  type GraphQLSchema,
+  type IExecutableSchemaDefinition,
+  type InputFieldMapper,
+  type InputObjectTypeMapper,
+  type InterfaceTypeMapper,
+  type IResolvers,
+  makeExecutableSchema,
+  MapperKind,
+  mapSchema,
+  type ObjectTypeMapper,
+  type ScalarTypeMapper,
+  type SchemaMapper as GraphQLSchemaMapper,
+  type UnionTypeMapper,
 } from "./deps.ts";
-import { makeExecutableSchema, MapperKind, mapSchema } from "./deps.ts";
 
 export type Callable = (...args: any[]) => any;
 
@@ -105,7 +108,7 @@ export const fromManifest = <
     IExecutableSchemaDefinition<TContext>,
     "typeDefs" | "resolvers"
   >,
-) => {
+): GraphQLSchema => {
   const typeDefs = Object.values(manifest.modules).map((m) => m.schema).filter((
     schema,
   ): schema is string => !!schema?.trim());

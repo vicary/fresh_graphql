@@ -1,4 +1,4 @@
-# fresh_graphql
+# fresh-graphql
 
 GraphQL development for Deno Fresh.
 
@@ -7,7 +7,7 @@ GraphQL development for Deno Fresh.
 1. [`graphql-yoga`](https://fresh-graphql-yoga.deno.dev/graphql)
 1. `apollo-server` (soon™)
 
-## Why `fresh_graphql`?
+## Why `fresh-graphql`?
 
 1. Familiar developer experience with `fresh` projects.
 1. `deno deploy` has no dynamic imports.
@@ -15,56 +15,31 @@ GraphQL development for Deno Fresh.
 
 ## Installation
 
-`fresh_graphql` hooks into the `dev.ts` lifecycle of fresh,
-[create a fresh project](https://fresh.deno.dev/docs/getting-started/create-a-project)
-if you haven't done so.
+```bash
+# deno
+deno add @vicary/fresh-graphql
 
-You need to patch 3 files from an existing fresh project:
+# npm
+npx jsr add @vicary/fresh-graphql
 
-### 1. `import_map.json`
+# yarn
+yarn dlx jsr add @vicary/fresh-graphql
 
-Versions are removed for clarity, should be compatible with `fresh@^1.1.1`.
-
-```diff
-{
-  "imports": {
-    "$fresh/": "https://deno.land/x/fresh/",
-+   "$fresh_graphql/": "https://deno.land/x/fresh_graphql/",
-
-    "preact": "https://esm.sh/preact",
-    "preact/": "https://esm.sh/preact/",
-
-    "preact-render-to-string": "https://esm.sh/*preact-render-to-string",
-
-    "twind": "https://esm.sh/twind",
-    "twind/": "https://esm.sh/twind/"
-  }
-}
+# pnpm
+pnpm dlx jsr add @vicary/fresh-graphql
 ```
 
-### 2. `deno.json`
+1. [Create a fresh project](https://fresh.deno.dev/docs/getting-started/create-a-project)
+   or checkout your existing Fresh project.
+1. Add the following lines to your `dev.ts`:
 
 ```diff
-{
-  "tasks": {
--    "start": "deno run -A --watch=static/,routes/ dev.ts"
-+    "start": "deno run -A --watch=static/,routes/,graphql/ dev.ts"
-  }
-}
-```
-
-### 3. `dev.ts`
-
-```diff
-- #!/usr/bin/env -S deno run -A --watch=static/,routes/
-+ #!/usr/bin/env -S deno run -A --watch=static/,routes/,graphql/
-
 import "https://deno.land/x/dotenv/load.ts";
 
 import dev from "$fresh/dev.ts";
-+ import { dev as graphqlDev } from "$fresh_graphql/mod.ts";
++ import { dev as graphql } from "@vicary/fresh-graphql";
 
-+ await graphqlDev(import.meta.url);
++ await graphql(import.meta.url);
 await dev(import.meta.url, "./main.ts");
 ```
 
@@ -80,10 +55,11 @@ convension.
 
 import type { HandlerContext } from "$fresh/server.ts";
 import { createServer } from "@graphql-yoga/common";
-import { fromManifest } from "$fresh_graphql/schema.ts";
-import manifest from "../fresh_graphql.gen.ts";
+import { fromManifest } from "@vicary/fresh-graphql";
+import manifest from "../graphql.gen.ts";
 
 const yoga = createServer<HandlerContext>({
+  graphiql: Deno.env.has("FRSH_GQL_DEV"), // Enable GraphiQL in development
   logging: true,
   maskedErrors: false,
   schema: fromManifest(manifest),
@@ -93,11 +69,6 @@ export const handler = async (req: Request, ctx: HandlerContext) => {
   return await yoga.handleRequest(req, ctx);
 };
 ```
-
-1. `@graphql-yoga/common` is chosen for it's simplicity, you may use any GraphQL
-   serveres compatible with `@graphql-tools/schema`.
-1. `fresh_graphql.gen.ts` This is the manifest file generated whenever you make
-   changes to source codes in the `./graphql` directory.
 
 ### Queries and Mutations
 
@@ -160,6 +131,13 @@ export const resolver = async function* (_, { from }) {
   }
 };
 ```
+
+### Side notes
+
+1. `@graphql-yoga/common` is chosen for it's simplicity, you may use any GraphQL
+   serveres compatible with `@graphql-tools/schema`.
+1. `graphql.gen.ts` This is the manifest file generated whenever you make
+   changes to source codes in the `./graphql` directory.
 
 ## Sponsorship
 

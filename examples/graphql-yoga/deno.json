@@ -1,7 +1,29 @@
 {
-  "importMap": "../../import_map.json",
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "preact"
+  },
+  "imports": {
+    "$fresh/": "https://deno.land/x/fresh@1.6.5/",
+    "$std/": "https://deno.land/std@0.219.0/",
+    "@graphql-tools/schema": "npm:@graphql-tools/schema@^10.0.0",
+    "@graphql-tools/utils": "npm:@graphql-tools/utils@^10.0.0",
+    "@preact/signals": "https://esm.sh/*@preact/signals@1.2.1",
+    "@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.5.0",
+    "@vicary/fresh-graphql": "jsr:@vicary/fresh-graphql@^0.1.0",
+    "graphql": "npm:graphql@^16.0.0",
+    "graphql-yoga": "npm:graphql-yoga@^5.1.1",
+    "preact": "https://esm.sh/preact@10.19.2",
+    "preact/": "https://esm.sh/preact@10.19.2/"
+  },
+  "lock": false,
+  "tasks": {
+    "build": "deno run -A dev.ts build",
+    "check": "deno fmt --check && deno lint && deno check **/*.ts && deno check **/*.tsx",
+    "cli": "echo \"import '\\$fresh/src/dev/cli.ts'\" | deno run --unstable -A -",
+    "manifest": "deno task cli manifest $(pwd)",
+    "preview": "deno run -A  main.ts",
+    "start": "deno run -A --watch=static/,routes/ dev.ts",
+    "update": "deno run -A -r https://fresh.deno.dev/update ."
   }
 }

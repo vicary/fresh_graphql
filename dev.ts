@@ -3,7 +3,6 @@
 import {
   dirname,
   ensureDir,
-  ensureMinDenoVersion,
   fromFileUrl,
   join,
   parsePath,
@@ -42,9 +41,7 @@ export async function collect(directory: string): Promise<Manifest> {
       })
     ) {
       if (entry.isFile) {
-        modules.push(
-          toFileUrl(entry.path).href.substring(baseUrl.length),
-        );
+        modules.push(toFileUrl(entry.path).href.substring(baseUrl.length));
       }
     }
   } catch (err) {
@@ -58,29 +55,31 @@ export async function collect(directory: string): Promise<Manifest> {
 }
 
 export async function generate(entrypoint: string, { modules }: Manifest) {
-  const output = /* TypeScript */ `// DO NOT EDIT.
-// This file is generated and updated by fresh_graphql during development.
+  const output = `// DO NOT EDIT.
+// This file is generated and updated by fresh-graphql during development.
 // This file should be checked into source control.
 
 ${
-    modules.map((file, i) => `import * as $${i} from "./graphql${file}";`)
+    modules
+      .map((file, i) => `import * as $${i} from "./graphql${file}";`)
       .join("\n")
   }
 
 const manifest = {
   modules: {
     ${
-    modules.map((file, i) => {
-      const { dir, name } = parsePath(file);
-      const key: string = [
+    modules
+      .map((file, i) => {
+        const { dir, name } = parsePath(file);
         // Remove leading slash
-        dir.slice(1),
-        name,
-      ].map((v) => v.trim()).filter(Boolean)
-        .join(".");
+        const key: string = [dir.slice(1), name]
+          .map((v) => v.trim())
+          .filter(Boolean)
+          .join(".");
 
-      return `"${key}": $${i}`;
-    }).join(",\n    ")
+        return `"${key}": $${i}`;
+      })
+      .join(",\n    ")
   }
   },
   baseUrl: import.meta.url,
@@ -89,28 +88,33 @@ const manifest = {
 export default manifest;
 `;
 
-  const procFmt = Deno.run({
-    cmd: [Deno.execPath(), "fmt", "-"],
-    stdin: "piped",
-    stdout: "piped",
-    stderr: "null",
-  });
+  const procFmt = new Deno.Command(
+    Deno.execPath(),
+    {
+      args: ["fmt", "-"],
+      stdin: "piped",
+      stdout: "piped",
+      stderr: "null",
+    },
+  ).spawn();
 
   await ensureDir(dirname(entrypoint));
 
-  const file = await Deno.create(entrypoint);
+  await Promise.all([
+    (async (): Promise<void> => {
+      const writer = procFmt.stdin.getWriter();
+      await writer.ready;
 
-  await new ReadableStream({
-    start(controller) {
-      controller.enqueue(new TextEncoder().encode(output));
-      controller.close();
-    },
-  }).pipeTo(procFmt.stdin.writable);
+      writer.write(new TextEncoder().encode(output));
+      await writer.close();
+    })(),
+    (async (): Promise<void> => {
+      const file = await Deno.create(entrypoint);
+      await procFmt.stdout.pipeTo(file.writable);
+    })(),
+  ]);
 
-  await procFmt.stdout.readable.pipeTo(file.writable);
-  await procFmt.status();
-
-  procFmt.close();
+  await procFmt.status;
 
   console.log(
     `%cGraphQL schema has been generated for ${modules.length} resolvers.`,
@@ -118,24 +122,27 @@ export default manifest;
   );
 }
 
-export async function dev(base: string, {
-  entrypoint = `./fresh_graphql.gen.ts`,
-}: DevOptions = {}) {
-  ensureMinDenoVersion();
+export async function dev(
+  base: string,
+  { entrypoint = `./graphql.gen.ts` }: DevOptions = {},
+) {
+  // ensureMinDenoVersion();
+
+  Deno.env.set("FRSH_GQL_DEV", "1");
 
   entrypoint = new URL(entrypoint, base).href;
 
   const dir = dirname(fromFileUrl(base));
 
   let currentManifest: Manifest;
-  const prevManifest = Deno.env.get("FRSH_FQL_DEV_PREVIOUS_MANIFEST");
+  const prevManifest = Deno.env.get("FRSH_FQL_DEV_MANIFEST");
   if (prevManifest) {
     currentManifest = JSON.parse(prevManifest);
   } else {
     currentManifest = { modules: [] };
   }
   const newManifest = await collect(dir);
-  Deno.env.set("FRSH_FQL_DEV_PREVIOUS_MANIFEST", JSON.stringify(newManifest));
+  Deno.env.set("FRSH_FQL_DEV_MANIFEST", JSON.stringify(newManifest));
 
   const manifestChanged = !arraysEqual(
     currentManifest.modules,

@@ -1,45 +1,42 @@
-export { ensureMinDenoVersion } from "$fresh/src/dev/mod.ts";
-export { ensureDir, walk } from "https://deno.land/std@0.159.0/fs/mod.ts";
+export { assert } from "jsr:@std/assert@^0.219.1";
+export { ensureDir, walk } from "jsr:@std/fs@^0.219.1";
 export {
   dirname,
   fromFileUrl,
   join,
   parse as parsePath,
   toFileUrl,
-} from "https://deno.land/std@0.159.0/path/mod.ts";
-export { assert } from "https://deno.land/std@0.159.0/testing/asserts.ts";
-export { makeExecutableSchema } from "https://esm.sh/@graphql-tools/schema@9.0.9?external=graphql";
-export type { IExecutableSchemaDefinition } from "https://esm.sh/@graphql-tools/schema@9.0.9?external=graphql";
+} from "jsr:@std/path@^0.219.1";
 export {
+  type IExecutableSchemaDefinition,
+  makeExecutableSchema,
+} from "npm:@graphql-tools/schema@^10.0.3";
+export {
+  type ArgumentMapper,
+  type EnumTypeMapper,
+  type EnumValueMapper,
+  type FieldMapper,
+  type GenericFieldMapper,
   getDirective,
+  type IFieldResolver,
+  type InputFieldMapper,
+  type InputObjectTypeMapper,
+  type InterfaceTypeMapper,
+  type IResolvers,
   MapperKind,
   mapSchema,
-} from "https://esm.sh/@graphql-tools/utils@9.1.0?external=graphql";
-export type {
-  ArgumentMapper,
-  EnumTypeMapper,
-  EnumValueMapper,
-  FieldMapper,
-  GenericFieldMapper,
-  IFieldResolver,
-  InputFieldMapper,
-  InputObjectTypeMapper,
-  InterfaceTypeMapper,
-  IResolvers,
-  ObjectTypeMapper,
-  ScalarTypeMapper,
-  SchemaMapper,
-  UnionTypeMapper,
-} from "https://esm.sh/@graphql-tools/utils@9.1.0?external=graphql";
+  type ObjectTypeMapper,
+  type ScalarTypeMapper,
+  type SchemaMapper,
+  type UnionTypeMapper,
+} from "npm:@graphql-tools/utils@^10.1.0";
 export {
   defaultFieldResolver,
+  type DirectiveDefinitionNode,
+  type GraphQLFieldConfig,
+  type GraphQLFieldResolver,
+  type GraphQLInputFieldConfig,
+  type GraphQLScalarType,
+  type GraphQLSchema,
   parse as parseGraphQL,
-} from "https://esm.sh/graphql@16.6.0";
-export type {
-  DirectiveDefinitionNode,
-  GraphQLFieldConfig,
-  GraphQLFieldResolver,
-  GraphQLInputFieldConfig,
-  GraphQLScalarType,
-  GraphQLSchema,
-} from "https://esm.sh/graphql@16.6.0";
+} from "npm:graphql@^16.8.0";

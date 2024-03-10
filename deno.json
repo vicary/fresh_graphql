@@ -1,11 +1,6 @@
 {
-  "tasks": {
-    "deploy:yoga": "deployctl deploy --project=fresh-graphql-yoga examples/graphql-yoga/main.ts",
-    "start:yoga": "deno run -A --watch=static/,routes/,graphql/ examples/graphql-yoga/dev.ts"
-  },
-  "importMap": "./import_map.json",
-  "compilerOptions": {
-    "jsx": "react-jsx",
-    "jsxImportSource": "preact"
-  }
+  "name": "@vicary/fresh-graphql",
+  "version": "0.1.0",
+  "exports": "./mod.ts",
+  "lock": false
 }
