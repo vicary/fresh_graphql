@@ -4,7 +4,7 @@ GraphQL development for Deno Fresh.
 
 ## Live Demo
 
-1. [`graphql-yoga`](https://fresh-graphql-yoga.deno.dev/graphql)
+1. [`graphql-yoga`](https://fresh-graphql-yoga.deno.dev)
 1. `apollo-server` (soon™)
 
 ## Why `fresh-graphql`?
@@ -135,7 +135,7 @@ export const resolver = async function* (_, { from }) {
 ### Side notes
 
 1. `@graphql-yoga/common` is chosen for it's simplicity, you may use any GraphQL
-   serveres compatible with `@graphql-tools/schema`.
+   servers compatible with `@graphql-tools/schema`.
 1. `graphql.gen.ts` This is the manifest file generated whenever you make
    changes to source codes in the `./graphql` directory.
 

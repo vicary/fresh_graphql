@@ -39,4 +39,4 @@ export {
   type GraphQLScalarType,
   type GraphQLSchema,
   parse as parseGraphQL,
-} from "npm:graphql@^16.8.0";
+} from "npm:graphql@^16.8.1";

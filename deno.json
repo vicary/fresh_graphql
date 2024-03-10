@@ -1,6 +1,7 @@
 {
   "name": "@vicary/fresh-graphql",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "exports": "./mod.ts",
-  "lock": false
+  "lock": false,
+  "nodeModulesDir": false
 }
