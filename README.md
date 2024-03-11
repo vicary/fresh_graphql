@@ -15,20 +15,6 @@ GraphQL development for Deno Fresh.
 
 ## Installation
 
-```bash
-# deno
-deno add @vicary/fresh-graphql
-
-# npm
-npx jsr add @vicary/fresh-graphql
-
-# yarn
-yarn dlx jsr add @vicary/fresh-graphql
-
-# pnpm
-pnpm dlx jsr add @vicary/fresh-graphql
-```
-
 1. [Create a fresh project](https://fresh.deno.dev/docs/getting-started/create-a-project)
    or checkout your existing Fresh project.
 1. Add the following lines to your `dev.ts`:
@@ -53,19 +39,22 @@ convension.
 ```ts
 // routes/graphql.ts
 
-import type { HandlerContext } from "$fresh/server.ts";
-import { createServer } from "@graphql-yoga/common";
+import { type FreshContext } from "$fresh/server.ts";
 import { fromManifest } from "@vicary/fresh-graphql";
+import { createYoga } from "graphql-yoga";
 import manifest from "../graphql.gen.ts";
 
-const yoga = createServer<HandlerContext>({
-  graphiql: Deno.env.has("FRSH_GQL_DEV"), // Enable GraphiQL in development
-  logging: true,
-  maskedErrors: false,
+// FRSH_GQL_DEV is set when you start the GraphQL development server in dev.ts.
+const debug = Deno.env.has("FRSH_GQL_DEV");
+
+const yoga = createYoga<FreshContext>({
+  graphiql: debug,
+  logging: debug,
+  maskedErrors: !debug,
   schema: fromManifest(manifest),
 });
 
-export const handler = async (req: Request, ctx: HandlerContext) => {
+export const handler = async (req: Request, ctx: FreshContext) => {
   return await yoga.handleRequest(req, ctx);
 };
 ```
