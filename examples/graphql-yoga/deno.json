@@ -19,7 +19,7 @@
     "cli": "echo \"import '\\$fresh/src/dev/cli.ts'\" | deno run --unstable -A -",
     "manifest": "deno task cli manifest $(pwd)",
     "preview": "deno run -A  main.ts",
-    "start": "deno run -A --watch=static/,routes/ dev.ts",
+    "start": "deno run -A --watch=static/,routes/,graphql/ dev.ts",
     "update": "deno run -A -r https://fresh.deno.dev/update ."
   }
 }

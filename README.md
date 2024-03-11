@@ -1,6 +1,6 @@
 # fresh-graphql
 
-GraphQL development for Deno Fresh.
+A simple GraphQL server for Deno Fresh.
 
 ## Live Demo
 
@@ -17,24 +17,34 @@ GraphQL development for Deno Fresh.
 
 1. [Create a fresh project](https://fresh.deno.dev/docs/getting-started/create-a-project)
    or checkout your existing Fresh project.
+
 1. Add the following lines to your `dev.ts`:
 
-```diff
-import "https://deno.land/x/dotenv/load.ts";
+   ```diff
+   import "https://deno.land/x/dotenv/load.ts";
 
-import dev from "$fresh/dev.ts";
-+ import { dev as graphql } from "@vicary/fresh-graphql";
+   import dev from "$fresh/dev.ts";
+   +import { dev as graphql } from "@vicary/fresh-graphql";
 
-+ await graphql(import.meta.url);
-await dev(import.meta.url, "./main.ts");
-```
+   +await graphql(import.meta.url);
+   await dev(import.meta.url, "./main.ts");
+   ```
+
+1. Include the `graphql/` directory in your deno.json.
+
+   ```diff
+    "tasks": {
+   -  "start": "deno run -A --watch=static/,routes/ dev.ts",
+   +  "start": "deno run -A --watch=static/,routes/,graphql/ dev.ts",
+    }
+   ```
 
 ## Usage
 
 ### Entrypoint
 
-Any data handler routes would work, the example below uses `/graphql` as a
-convension.
+Any data handler routes would work, the example below uses the pathname
+`/graphql` as a convension.
 
 ```ts
 // routes/graphql.ts
@@ -62,7 +72,7 @@ export const handler = async (req: Request, ctx: FreshContext) => {
 ### Queries and Mutations
 
 ```ts
-// ./graphql/Query/joke.ts
+// graphql/Query/joke.ts
 
 export const schema = /* GraphQL */ `
   extend type Query {
@@ -105,7 +115,7 @@ export const resolver = {
 ### Subscriptions
 
 ```ts
-// ./graphql/Subscription/countdown.ts
+// graphql/Subscription/countdown.ts
 
 export const schema = /* GraphQL */ `
   extend type Subscription {
@@ -121,12 +131,18 @@ export const resolver = async function* (_, { from }) {
 };
 ```
 
+### Directives
+
+Supported, documentations coming.
+
+You may read `dev.ts` if you need it now.
+
 ### Side notes
 
-1. `@graphql-yoga/common` is chosen for it's simplicity, you may use any GraphQL
-   servers compatible with `@graphql-tools/schema`.
+1. `graphql-yoga` is chosen for it's simplicity, you may use any GraphQL servers
+   compatible with `@graphql-tools/schema`.
 1. `graphql.gen.ts` This is the manifest file generated whenever you make
-   changes to source codes in the `./graphql` directory.
+   changes to source codes in the `graphql` directory.
 
 ## Sponsorship
 
