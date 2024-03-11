@@ -122,6 +122,10 @@ export default manifest;
   );
 }
 
+/**
+ * Run the development server for GraphQL and generates a GraphQL schema
+ * manifest compatible with `.fromManifest()`.
+ */
 export async function dev(
   base: string,
   { entrypoint = `./graphql.gen.ts` }: DevOptions = {},

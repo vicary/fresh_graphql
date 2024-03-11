@@ -99,16 +99,25 @@ export type Manifest = {
   baseUrl: string;
 };
 
-export const fromManifest = <
+/**
+ * Converting a generated manifest into a GraphQL schema object.
+ */
+export function fromManifest<
   TManifest extends Manifest,
   TContext = unknown,
 >(
+  /** The manifest imported from a generated file. */
   manifest: TManifest,
+  /**
+   * Additional options for creating the schema.
+   *
+   * @see https://www.graphql-tools.com/docs/generate-schema#options
+   */
   options?: Omit<
     IExecutableSchemaDefinition<TContext>,
     "typeDefs" | "resolvers"
   >,
-): GraphQLSchema => {
+): GraphQLSchema {
   const typeDefs = Object.values(manifest.modules).map((m) => m.schema).filter((
     schema,
   ): schema is string => !!schema?.trim());
@@ -174,4 +183,4 @@ export const fromManifest = <
     },
     schema,
   );
-};
+}
