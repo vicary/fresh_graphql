@@ -28,7 +28,9 @@ import {
 
 export type Callable = (...args: any[]) => any;
 
+/** An object type definition with an optional resolver. */
 export type GraphQLTypeModule = {
+  /** GraphQL SDL */
   schema: string;
 
   /** Resolver of the schema, optional. */
@@ -38,6 +40,7 @@ export type GraphQLTypeModule = {
     | GraphQLFieldResolver<any, any, any, any>;
 };
 
+/** A directive definition with a schema mapper */
 export type GraphQLDirectiveModule<TSchema extends string = string> = {
   schema: TSchema;
 
@@ -89,6 +92,9 @@ export type SchemaMapper<TSchema extends string> = TSchema extends
   )
   : never;
 
+/**
+ * The generated GraphQL manifest file content.
+ */
 export type Manifest = {
   // modules: Record<string, GraphQLModule>;
   modules: {

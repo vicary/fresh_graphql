@@ -1,0 +1,3 @@
+{
+  "dev": "@@ -1,6 +1,8 @@\n-#!/usr/bin/env -S deno run -A --watch=static/,routes/\n+#!/usr/bin/env -S deno run -A --watch=static/,routes/,graphql/\n\n import dev from \"$fresh/dev.ts\";\n+import { dev as graphql } from \"@vicary/fresh-graphql\";\n import config from \"./fresh.config.ts\";\n\n+await graphql(import.meta.url);\n await dev(import.meta.url, \"./main.ts\", config);\n"
+}

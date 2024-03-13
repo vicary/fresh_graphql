@@ -15,29 +15,42 @@ A simple GraphQL server for Deno Fresh.
 
 ## Installation
 
-1. [Create a fresh project](https://fresh.deno.dev/docs/getting-started/create-a-project)
-   or checkout your existing Fresh project.
+```bash
+# Create a Fresh project
+> deno run -A -r https://fresh.deno.dev
 
-1. Add the following lines to your `dev.ts`:
+# Add fresh-graphql to your project
+> deno run -A jsr:@vicary/fresh-graphql
+```
 
-   ```diff
-   import "https://deno.land/x/dotenv/load.ts";
+### Manual Installation
 
-   import dev from "$fresh/dev.ts";
-   +import { dev as graphql } from "@vicary/fresh-graphql";
+You may also patch the files manually if you have modified `dev.ts` or
+`deno.json` for an existing Fresh project.
 
-   +await graphql(import.meta.url);
-   await dev(import.meta.url, "./main.ts");
-   ```
+#### dev.ts
 
-1. Include the `graphql/` directory in your deno.json.
+```diff
+-#!/usr/bin/env -S deno run -A --watch=static/,routes/
++#!/usr/bin/env -S deno run -A --watch=static/,routes/,graphql/
 
-   ```diff
-    "tasks": {
-   -  "start": "deno run -A --watch=static/,routes/ dev.ts",
-   +  "start": "deno run -A --watch=static/,routes/,graphql/ dev.ts",
-    }
-   ```
+import "https://deno.land/x/dotenv/load.ts";
+
+import dev from "$fresh/dev.ts";
++import { dev as graphql } from "@vicary/fresh-graphql";
+
++await graphql(import.meta.url);
+await dev(import.meta.url, "./main.ts");
+```
+
+#### deno.json
+
+```diff
+"tasks": {
+-  "start": "deno run -A --watch=static/,routes/ dev.ts",
++  "start": "deno run -A --watch=static/,routes/,graphql/ dev.ts",
+}
+```
 
 ## Usage
 
@@ -135,7 +148,7 @@ export const resolver = async function* (_, { from }) {
 
 Supported, documentations coming.
 
-You may read `dev.ts` if you need it now.
+If you need it now, you may read our source code.
 
 ### Side notes
 

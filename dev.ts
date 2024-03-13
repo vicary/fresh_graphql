@@ -10,6 +10,7 @@ import {
   walk,
 } from "./deps.ts";
 
+/** Options for the GraphQL dev server. */
 export type DevOptions = {
   /** Path to generated schema manifest. */
   entrypoint?: string;
