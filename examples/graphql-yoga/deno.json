@@ -10,7 +10,8 @@
     "@vicary/fresh-graphql": "jsr:@vicary/fresh-graphql@^0.1.0",
     "graphql-yoga": "npm:graphql-yoga@^5.1.1",
     "preact": "https://esm.sh/preact@10.19.2",
-    "preact/": "https://esm.sh/preact@10.19.2/"
+    "preact/": "https://esm.sh/preact@10.19.2/",
+    "tailwindcss": "npm:tailwindcss@^3.4.0"
   },
   "lock": false,
   "tasks": {

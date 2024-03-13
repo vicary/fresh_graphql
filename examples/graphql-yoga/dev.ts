@@ -2,6 +2,7 @@
 
 import dev from "$fresh/dev.ts";
 import { dev as graphql } from "@vicary/fresh-graphql";
+import config from "./fresh.config.ts";
 
 await graphql(import.meta.url);
-await dev(import.meta.url, "./main.ts");
+await dev(import.meta.url, "./main.ts", config);
