@@ -1,7 +1,14 @@
 {
   "name": "@vicary/fresh-graphql",
-  "version": "0.2.6",
+  "version": "0.2.8",
   "exports": "./mod.ts",
+  "publish": {
+    "exclude": [
+      ".github/**",
+      ".vscode/**",
+      "examples/**"
+    ]
+  },
   "lock": false,
   "nodeModulesDir": false
 }
