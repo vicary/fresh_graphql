@@ -1,3 +1,5 @@
+#! /env/bin/node
+
 import { assert, colors, log } from "./deps.ts";
 import diff from "./diff.json" with { type: "json" };
 
