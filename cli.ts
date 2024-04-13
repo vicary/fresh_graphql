@@ -54,7 +54,9 @@ async function main() {
     }
   }
 
-  if (promptYesNo("Do you want fresh-graphql to patch to `deno.json`?", true)) {
+  if (
+    promptYesNo("Do you want fresh-graphql to patch your `deno.json`?", true)
+  ) {
     if (!await patchDenoJson()) {
       log.error("Unable to patch deno.json, please try to do it manually.");
     }

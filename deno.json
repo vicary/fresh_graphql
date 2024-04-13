@@ -1,7 +1,6 @@
 {
   "name": "@vicary/fresh-graphql",
-  "version": "0.2.9-canary.1",
-  "bin": "./cli.ts",
+  "version": "0.2.9",
   "exports": "./mod.ts",
   "publish": {
     "exclude": [
