@@ -56,7 +56,7 @@ await dev(import.meta.url, "./main.ts");
 ## Usage
 
 1. Run `deno task start`
-1. Visit `http://localhost:3000/graphql` for an GraphiQL interface.
+1. Visit `http://localhost:8000/graphql` for an GraphiQL interface.
 
 ### Entrypoint
 
