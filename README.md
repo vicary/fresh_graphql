@@ -9,9 +9,10 @@ A simple GraphQL server for Deno Fresh.
 
 ## Why `fresh-graphql`?
 
-1. Familiar developer experience with `fresh` projects.
-1. `deno deploy` has no dynamic imports.
-1. [`tRPC`](https://trpc.io) doesn't support deno (yet).
+1. You want file based routing.
+1. You want GraphQL.
+1. You have a [Deno Fresh](https://fresh.deno.dev) project.
+1. `deno deploy` does not support dynamic imports.
 
 ## Installation
 
@@ -54,35 +55,26 @@ await dev(import.meta.url, "./main.ts");
 
 ## Usage
 
+1. Run `deno task start`
+1. Visit `http://localhost:3000/graphql` for an GraphiQL interface.
+
 ### Entrypoint
 
-Any data handler routes would work, the example below uses the pathname
-`/graphql` as a convension.
+Our CLI will generate a default GraphQL endpoint for you, you may also do it
+manually by copying the contents below:
 
 ```ts
 // routes/graphql.ts
 
-import { type FreshContext } from "$fresh/server.ts";
-import { fromManifest } from "@vicary/fresh-graphql";
-import { createYoga } from "graphql-yoga";
+import { createHandler } from "@vicary/fresh-graphql";
 import manifest from "../graphql.gen.ts";
 
-// FRSH_GQL_DEV is set when you start the GraphQL development server in dev.ts.
-const debug = Deno.env.has("FRSH_GQL_DEV");
-
-const yoga = createYoga<FreshContext>({
-  graphiql: debug,
-  logging: debug,
-  maskedErrors: !debug,
-  schema: fromManifest(manifest),
-});
-
-export const handler = async (req: Request, ctx: FreshContext) => {
-  return await yoga.handleRequest(req, ctx);
-};
+export const handler = createHandler(manifest);
 ```
 
 ### Queries and Mutations
+
+This is a GraphQL version of the joke API when you create a new Fresh project.
 
 ```ts
 // graphql/Query/joke.ts

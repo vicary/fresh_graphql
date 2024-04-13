@@ -18,7 +18,7 @@ import {
   type InterfaceTypeMapper,
   type IResolvers,
   makeExecutableSchema,
-  MapperKind,
+  type MapperKind,
   mapSchema,
   type ObjectTypeMapper,
   type ScalarTypeMapper,

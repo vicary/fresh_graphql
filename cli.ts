@@ -61,6 +61,14 @@ async function main() {
       log.error("Unable to patch deno.json, please try to do it manually.");
     }
   }
+
+  if (promptYesNo("Create default GraphQL endpoint at routes/graphql?", true)) {
+    if (!await createEndpoint("routes/graphql.ts")) {
+      log.error(
+        "Unable to create routes/graphql.ts, please try to do it manually.",
+      );
+    }
+  }
 }
 
 await main();
@@ -199,6 +207,24 @@ async function patchDenoJson(): Promise<boolean> {
   }
 
   log.info(`deno.json patched successfully.`);
+
+  return true;
+}
+
+async function createEndpoint(path: string) {
+  try {
+    await Deno.writeTextFile(
+      path,
+      `// ${path}: GraphQL endpoint for fresh-graphql
+import { createHandler } from "@vicary/fresh-graphql";
+import manifest from "../graphql.gen.ts";
+
+export const handler = createHandler(manifest);
+`,
+    );
+  } catch {
+    return false;
+  }
 
   return true;
 }
