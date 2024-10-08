@@ -1,4 +1,3 @@
-export type { FreshContext } from "https://deno.land/x/fresh@1.6.8/server.ts";
 export { assert } from "jsr:@std/assert@^0.219.1/assert";
 export * as colors from "jsr:@std/fmt@^0.219.1/colors";
 export { ensureDir } from "jsr:@std/fs@^0.219.1/ensure_dir";

@@ -2,6 +2,7 @@
   "name": "@vicary/fresh-graphql",
   "version": "0.2.10-alpha.0",
   "exports": "./mod.ts",
+  "license": "MIT",
   "publish": {
     "exclude": [
       ".github/**",
